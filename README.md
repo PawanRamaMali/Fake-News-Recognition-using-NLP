@@ -38,7 +38,7 @@ for dirname, _, filenames in os.walk('/kaggle/input'):
 
 ```
 
-```
+```Python
 import pandas as pd
 import matplotlib.pyplot as plt
 import cufflinks as cf
@@ -68,22 +68,30 @@ sr_ = Style.RESET_ALL
 
 ### Reading the csv file
 
-```
+```Python
 df = pd.read_csv(r'../input/source-based-news-classification/news_articles.csv', encoding="latin", index_col=0)
 df = df.dropna()
 df.count()
 ```
 
-```
+```Python
 df.head(10)
 ```
 
-```
+```Python
 df['type'].unique()
 ```
 
-```
+```Python
 cf.go_offline()
 cf.set_config_file(offline=False, world_readable=True)
 ```
 
+### Distrubution of types of articles
+
+```Python
+df['type'].value_counts().plot.pie(figsize = (8,8), startangle = 75)
+plt.title('Types of articles', fontsize = 20)
+plt.axis('off')
+plt.show()
+```
