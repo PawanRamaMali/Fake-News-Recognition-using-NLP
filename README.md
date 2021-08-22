@@ -38,7 +38,7 @@ for dirname, _, filenames in os.walk('/kaggle/input'):
 
 ```
 
-```Python
+```Py
 import pandas as pd
 import matplotlib.pyplot as plt
 import cufflinks as cf
@@ -68,28 +68,28 @@ sr_ = Style.RESET_ALL
 
 ### Reading the csv file
 
-```Python
+```Py
 df = pd.read_csv(r'../input/source-based-news-classification/news_articles.csv', encoding="latin", index_col=0)
 df = df.dropna()
 df.count()
 ```
 
-```Python
+```Py
 df.head(10)
 ```
 
-```Python
+```Py
 df['type'].unique()
 ```
 
-```Python
+```Py
 cf.go_offline()
 cf.set_config_file(offline=False, world_readable=True)
 ```
 
 ### Distrubution of types of articles
 
-```Python
+```Py
 df['type'].value_counts().plot.pie(figsize = (8,8), startangle = 75)
 plt.title('Types of articles', fontsize = 20)
 plt.axis('off')
@@ -152,4 +152,51 @@ wc.generate(' '.join(df['text_without_stopwords']))
 plt.imshow(wc, interpolation="bilinear")
 plt.axis('off')
 plt.show()
+```
+
+### Articles including images vs Label
+
+```py
+fig = px.bar(df, x='hasImage', y='label',title='Articles including images vs Label')
+fig.show()
+```
+
+```py
+def convert(path):
+    return '<img src="'+ path + '" width="80">'
+```
+
+```py
+df_sources = df[['site_url','label','main_img_url']]
+df_r = df_sources.loc[df['label']== 'Real'].iloc[6:10,:]
+df_f = df_sources.loc[df['label']== 'Fake'].head(6)
+```
+
+```py
+HTML(df_r.to_html(escape=False,formatters=dict(main_img_url=convert)))
+```
+
+```py
+HTML(df_f.to_html(escape=False,formatters=dict(main_img_url=convert)))
+```
+
+```py
+df['site_url'].unique()
+```
+
+```py
+type_label = {'Real': 0, 'Fake': 1}
+df_sources.label = [type_label[item] for item in df_sources.label]
+```
+
+```py
+val_real=[]
+val_fake=[]
+
+for i,row in df_sources.iterrows():
+    val = row['site_url']
+    if row['label'] == 0:
+        val_real.append(val)
+    elif row['label']== 1:
+        val_fake.append(val)
 ```
