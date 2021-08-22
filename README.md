@@ -21,6 +21,10 @@ The first step, which is text preprocessing was performed using the following:
 
 For feature engineering, the TF-IDF technique is used. This processed and embedded text is provided as an input to Machine learning models, where the data is made to fit the model, to get a prediction as an output.
 
+
+### Imports
+
+
 ```Python
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
@@ -33,8 +37,6 @@ for dirname, _, filenames in os.walk('/kaggle/input'):
         print(os.path.join(dirname, filename))
 
 ```
-
-### Imports
 
 ```
 import pandas as pd
@@ -63,3 +65,25 @@ b_ = Fore.BLUE
 m_ = Fore.MAGENTA
 sr_ = Style.RESET_ALL
 ```
+
+### Reading the csv file
+
+```
+df = pd.read_csv(r'../input/source-based-news-classification/news_articles.csv', encoding="latin", index_col=0)
+df = df.dropna()
+df.count()
+```
+
+```
+df.head(10)
+```
+
+```
+df['type'].unique()
+```
+
+```
+cf.go_offline()
+cf.set_config_file(offline=False, world_readable=True)
+```
+
