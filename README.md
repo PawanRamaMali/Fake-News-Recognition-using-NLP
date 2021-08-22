@@ -141,3 +141,15 @@ df3 = pd.DataFrame(common_words, columns = ['words' ,'count'])
 df3.groupby('words').sum()['count'].sort_values(ascending=False).iplot(
     kind='bar', yTitle='Count', linecolor='black', title='Top 20 bigrams used in articles', color='blue')
 ```
+
+### WordCloud of articles 
+
+```py
+wc = WordCloud(background_color="black", max_words=100,
+               max_font_size=256,
+               random_state=42, width=1000, height=1000)
+wc.generate(' '.join(df['text_without_stopwords']))
+plt.imshow(wc, interpolation="bilinear")
+plt.axis('off')
+plt.show()
+```
