@@ -208,3 +208,10 @@ uniqueValues_real = list(OrderedDict.fromkeys(val_real))
 
 print(f"{y_}Websites publishing real news:{g_}{uniqueValues_real}\n")
 ```
+
+### Websites publishing fake news
+
+```py
+uniqueValues_fake = list(OrderedDict.fromkeys(val_fake)) 
+print(f"{y_}Websites publishing fake news:{r_}{uniqueValues_fake}\n")
+```
