@@ -95,3 +95,49 @@ plt.title('Types of articles', fontsize = 20)
 plt.axis('off')
 plt.show()
 ```
+
+
+### Unigrams and bigrams
+
+```Py
+def get_top_n_words(corpus, n=None):
+    vec = CountVectorizer().fit(corpus)
+    bag_of_words = vec.transform(corpus)
+    sum_words = bag_of_words.sum(axis=0) 
+    words_freq = [(word, sum_words[0, idx]) for word, idx in     vec.vocabulary_.items()]
+    words_freq =sorted(words_freq, key = lambda x: x[1], reverse=True)
+    return words_freq[:n]
+
+def get_top_n_bigram(corpus, n=None):
+    vec = CountVectorizer(ngram_range=(2, 2)).fit(corpus)
+    bag_of_words = vec.transform(corpus)
+    sum_words = bag_of_words.sum(axis=0) 
+    words_freq = [(word, sum_words[0, idx]) for word, idx in vec.vocabulary_.items()]
+    words_freq =sorted(words_freq, key = lambda x: x[1], reverse=True)
+    return words_freq[:n]
+
+
+def get_top_n_trigram(corpus, n=None):
+    vec = CountVectorizer(ngram_range=(3, 3)).fit(corpus)
+    bag_of_words = vec.transform(corpus)
+    sum_words = bag_of_words.sum(axis=0) 
+    words_freq = [(word, sum_words[0, idx]) for word, idx in vec.vocabulary_.items()]
+    words_freq =sorted(words_freq, key = lambda x: x[1], reverse=True)
+    return words_freq[:n]
+    
+```
+
+```py
+
+common_words = get_top_n_words(df['text_without_stopwords'], 20)
+df2 = DataFrame (common_words,columns=['word','count'])
+df2.groupby('word').sum()['count'].sort_values(ascending=False).iplot(
+    kind='bar', yTitle='Count', linecolor='black', title='Top 20 unigrams used in articles',color='blue')
+```
+
+```py
+common_words = get_top_n_bigram(df['text_without_stopwords'], 20)
+df3 = pd.DataFrame(common_words, columns = ['words' ,'count'])
+df3.groupby('words').sum()['count'].sort_values(ascending=False).iplot(
+    kind='bar', yTitle='Count', linecolor='black', title='Top 20 bigrams used in articles', color='blue')
+```
