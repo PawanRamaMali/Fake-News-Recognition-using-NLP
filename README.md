@@ -200,3 +200,11 @@ for i,row in df_sources.iterrows():
     elif row['label']== 1:
         val_fake.append(val)
 ```
+
+### Websites publishing real news
+
+```py
+uniqueValues_real = list(OrderedDict.fromkeys(val_real)) 
+
+print(f"{y_}Websites publishing real news:{g_}{uniqueValues_real}\n")
+```
